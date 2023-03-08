@@ -9,6 +9,12 @@ variable "app_network_access_type" {
   description = "Specifies the VPC used for non-EFS traffic"
 }
 
+variable "lcc_python_kernel" {
+  type        = string
+  default     = null
+  description = "Specifies the custom lifecycle config file"
+}
+
 variable "role_arn" {
   type        = string
   default     = null
