@@ -8,15 +8,6 @@ export TIMEOUT_IN_MINS=120
 cd /home/sagemaker-user
 
 # By working in a directory starting with ".", we won't clutter up users' Jupyter file tree views
-mkdir -p .run-notebook
-cd .run-notebook
-
-# Installs the run-notebook extension
-curl -L https://github.com/aws-samples/sagemaker-run-notebook/releases/download/v0.23.0/sagemaker_run_notebook-0.23.0.tar.gz --output sagemaker_run_notebook-0.23.0.tar.gz
-pip install sagemaker_run_notebook-0.23.0.tar.gz
-
-# By working in a directory starting with ".", we won't clutter up users' Jupyter file tree views
-cd /home/sagemaker-user
 mkdir -p .auto-shutdown
 
 # Create the command-line script for setting the idle timeout
