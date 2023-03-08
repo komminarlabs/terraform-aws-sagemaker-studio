@@ -1,3 +1,7 @@
+locals {
+  lcc_python_kernel = var.lcc_python_kernel != null ? var.lcc_python_kernel : "${path.module}/scripts/lcc_jupyter_server.sh"
+}
+
 resource "aws_sagemaker_domain" "default" {
   domain_name             = var.name
   app_network_access_type = var.app_network_access_type
@@ -40,7 +44,7 @@ resource "aws_sagemaker_studio_lifecycle_config" "jupyter" {
 resource "aws_sagemaker_studio_lifecycle_config" "kernel" {
   studio_lifecycle_config_name     = "lcc-python-kernel"
   studio_lifecycle_config_app_type = "KernelGateway"
-  studio_lifecycle_config_content  = filebase64("${path.module}/scripts/lcc_python_kernel.sh")
+  studio_lifecycle_config_content  = filebase64(local.lcc_python_kernel)
   tags                             = var.tags
 }
 
