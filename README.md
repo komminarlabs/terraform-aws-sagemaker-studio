@@ -24,6 +24,7 @@ Terraform module to create and manage a SageMaker studio
 | tags | A mapping of tags to assign to the resources | `map(string)` | n/a | yes |
 | vpc\_id | The VPC id | `string` | n/a | yes |
 | app\_network\_access\_type | Specifies the VPC used for non-EFS traffic | `string` | `"PublicInternetOnly"` | no |
+| lcc\_python\_kernel | Specifies the custom lifecycle config file | `string` | `null` | no |
 | role\_arn | The arn of the IAM role to use for sagemaker | `string` | `null` | no |
 | security\_groups | The security groups | `list(string)` | `null` | no |
 | user\_profiles | The subnet ids | `list(string)` | `[]` | no |
