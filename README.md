@@ -80,6 +80,7 @@ No modules.
 | <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | The VPC id | `string` | n/a | yes |
 | <a name="input_app_network_access_type"></a> [app\_network\_access\_type](#input\_app\_network\_access\_type) | Specifies the VPC used for non-EFS traffic | `string` | `"VpcOnly"` | no |
 | <a name="input_auth_mode"></a> [auth\_mode](#input\_auth\_mode) | The mode of authentication that members use to access the domain | `string` | `"IAM"` | no |
+| <a name="input_kms_key_id"></a> [kms\_key\_id](#input\_kms\_key\_id) | The kms key id of the AWS KMS Customer Managed Key to be used to encrypt the EFS volume attached to the domain | `string` | `null` | no |
 | <a name="input_lcc_python_kernel"></a> [lcc\_python\_kernel](#input\_lcc\_python\_kernel) | Specifies the custom lifecycle config file | `string` | `null` | no |
 | <a name="input_role_arn"></a> [role\_arn](#input\_role\_arn) | The arn of the IAM role to use for sagemaker | `string` | `null` | no |
 | <a name="input_security_groups"></a> [security\_groups](#input\_security\_groups) | The security groups | `list(string)` | `null` | no |
