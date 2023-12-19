@@ -1,8 +1,6 @@
 data "aws_iam_policy_document" "assume_policy" {
   statement {
-    actions = [
-      "sts:AssumeRole"
-    ]
+    actions = ["sts:AssumeRole"]
     principals {
       type = "Service"
       identifiers = [
@@ -15,60 +13,18 @@ data "aws_iam_policy_document" "assume_policy" {
 
 data "aws_iam_policy_document" "default" {
   statement {
-    sid       = ""
-    effect    = "Allow"
-    resources = ["arn:aws:iam::*:role/*"]
     actions   = ["iam:PassRole"]
+    resources = ["arn:aws:iam::*:role/*"]
 
     condition {
       test     = "StringLike"
       variable = "iam:PassedToService"
-
-      values = [
-        "sagemaker.amazonaws.com",
-        "events.amazonaws.com",
-      ]
+      values   = ["sagemaker.amazonaws.com"]
     }
   }
 
   statement {
-    sid       = ""
-    effect    = "Allow"
-    resources = ["*"]
-
-    actions = [
-      "events:TagResource",
-      "events:DeleteRule",
-      "events:PutTargets",
-      "events:DescribeRule",
-      "events:PutRule",
-      "events:RemoveTargets",
-      "events:DisableRule",
-      "events:EnableRule",
-    ]
-
-    condition {
-      test     = "StringEquals"
-      variable = "aws:ResourceTag/sagemaker:is-scheduling-notebook-job"
-      values   = ["true"]
-    }
-  }
-
-  statement {
-    sid       = ""
-    effect    = "Allow"
-    resources = ["arn:aws:s3:::sagemaker-automated-execution-*"]
-
-    actions = [
-      "s3:CreateBucket",
-      "s3:PutBucketVersioning",
-      "s3:PutEncryptionConfiguration",
-    ]
-  }
-
-  statement {
-    sid    = ""
-    effect = "Allow"
+    actions = ["sagemaker:ListTags"]
 
     resources = [
       "arn:aws:sagemaker:*:*:user-profile/*",
@@ -76,27 +32,18 @@ data "aws_iam_policy_document" "default" {
       "arn:aws:sagemaker:*:*:training-job/*",
       "arn:aws:sagemaker:*:*:pipeline/*",
     ]
-
-    actions = ["sagemaker:ListTags"]
   }
 
   statement {
-    sid    = ""
-    effect = "Allow"
+    actions = ["sagemaker:AddTags"]
 
     resources = [
       "arn:aws:sagemaker:*:*:training-job/*",
       "arn:aws:sagemaker:*:*:pipeline/*",
     ]
-
-    actions = ["sagemaker:AddTags"]
   }
 
   statement {
-    sid       = ""
-    effect    = "Allow"
-    resources = ["*"]
-
     actions = [
       "ec2:CreateNetworkInterface",
       "ec2:CreateNetworkInterfacePermission",
@@ -110,16 +57,37 @@ data "aws_iam_policy_document" "default" {
       "ec2:DescribeSubnets",
       "ec2:DescribeVpcEndpoints",
       "ec2:DescribeVpcs",
+    ]
+
+    resources = ["*"]
+  }
+
+  statement {
+    actions = [
       "ecr:BatchCheckLayerAvailability",
       "ecr:BatchGetImage",
       "ecr:GetDownloadUrlForLayer",
       "ecr:GetAuthorizationToken",
+    ]
+
+    resources = ["*"]
+  }
+
+  statement {
+    actions = [
       "s3:ListBucket",
       "s3:GetBucketLocation",
       "s3:GetEncryptionConfiguration",
       "s3:PutObject",
       "s3:DeleteObject",
       "s3:GetObject",
+    ]
+
+    resources = ["*"]
+  }
+
+  statement {
+    actions = [
       "sagemaker:DescribeDomain",
       "sagemaker:DescribeUserProfile",
       "sagemaker:DescribeSpace",
@@ -135,19 +103,21 @@ data "aws_iam_policy_document" "default" {
       "sagemaker:DeletePipeline",
       "sagemaker:StartPipelineExecution",
     ]
+
+    resources = ["*"]
   }
 }
 
 resource "aws_iam_role" "default" {
   count              = var.role_arn == null ? 1 : 0
-  name               = "SageMakerRole-${var.name}"
+  name               = "SageMakerExecutionRole-${var.name}"
   assume_role_policy = data.aws_iam_policy_document.assume_policy.json
   tags               = var.tags
 }
 
 resource "aws_iam_role_policy" "default" {
   count  = var.role_arn == null ? 1 : 0
-  name   = "SageMakerRole-${var.name}"
+  name   = "SageMakerExecutionRole-${var.name}"
   role   = aws_iam_role.default[0].id
   policy = data.aws_iam_policy_document.default.json
 }

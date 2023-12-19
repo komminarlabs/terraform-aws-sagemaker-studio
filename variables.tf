@@ -5,8 +5,24 @@ variable "name" {
 
 variable "app_network_access_type" {
   type        = string
-  default     = "PublicInternetOnly"
+  default     = "VpcOnly"
   description = "Specifies the VPC used for non-EFS traffic"
+
+  validation {
+    condition     = contains(["PublicInternetOnly", "VpcOnly"], var.app_network_access_type)
+    error_message = "Allowed values for app_network_access_type are \"PublicInternetOnly\" or \"VpcOnly\"."
+  }
+}
+
+variable "auth_mode" {
+  type        = string
+  default     = "IAM"
+  description = "The mode of authentication that members use to access the domain"
+
+  validation {
+    condition     = contains(["IAM", "SSO"], var.auth_mode)
+    error_message = "Allowed values for auth_mode are \"IAM\" or \"SSO\"."
+  }
 }
 
 variable "lcc_python_kernel" {

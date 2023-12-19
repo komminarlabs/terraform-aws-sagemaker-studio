@@ -5,7 +5,7 @@ locals {
 resource "aws_sagemaker_domain" "default" {
   domain_name             = var.name
   app_network_access_type = var.app_network_access_type
-  auth_mode               = "IAM"
+  auth_mode               = var.auth_mode
   subnet_ids              = var.subnet_ids
   vpc_id                  = var.vpc_id
   tags                    = var.tags
@@ -22,29 +22,13 @@ resource "aws_sagemaker_domain" "default" {
         lifecycle_config_arn = aws_sagemaker_studio_lifecycle_config.jupyter.arn
       }
     }
-
-    kernel_gateway_app_settings {
-      lifecycle_config_arns = [aws_sagemaker_studio_lifecycle_config.kernel.arn]
-
-      default_resource_spec {
-        instance_type        = "system"
-        lifecycle_config_arn = aws_sagemaker_studio_lifecycle_config.kernel.arn
-      }
-    }
   }
 }
 
 resource "aws_sagemaker_studio_lifecycle_config" "jupyter" {
-  studio_lifecycle_config_name     = "lcc-jupyter-server"
+  studio_lifecycle_config_name     = "lcc-jupyter-server-autoshutdown"
   studio_lifecycle_config_app_type = "JupyterServer"
-  studio_lifecycle_config_content  = filebase64("${path.module}/scripts/lcc_jupyter_server.sh")
-  tags                             = var.tags
-}
-
-resource "aws_sagemaker_studio_lifecycle_config" "kernel" {
-  studio_lifecycle_config_name     = "lcc-python-kernel"
-  studio_lifecycle_config_app_type = "KernelGateway"
-  studio_lifecycle_config_content  = filebase64(local.lcc_python_kernel)
+  studio_lifecycle_config_content  = filebase64("${path.module}/scripts/lcc_jupyter_server_autoshutdown.sh")
   tags                             = var.tags
 }
 

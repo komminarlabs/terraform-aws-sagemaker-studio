@@ -1,5 +1,5 @@
 module "example_studio" {
-  source                  = "github.com/komminar/terraform-aws-sagemaker-studio?ref=v0.1.0"
+  source                  = "github.com/komminar/terraform-aws-sagemaker-studio?ref=v1.0.0"
   name                    = "example-studio"
   app_network_access_type = "VpcOnly"
   subnet_ids              = aws_subnet.private[*].id
@@ -12,6 +12,6 @@ module "example_studio" {
 
   tags = {
     Environment = "development"
-    Stack       = "glue"
+    Stack       = "sagemaker"
   }
 }
