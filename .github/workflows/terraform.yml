@@ -30,14 +30,13 @@ jobs:
         id: fmt
         run: terraform fmt -check -recursive
 
+      - name: Terraform Init
+        id: init
+        run: terraform init
+
       - name: Terraform Validate
         id: validate
-        run: |
-          for d in examples/*/; do
-            terraform -chdir=$d validate -no-color
-          done
-        env:
-          AWS_DEFAULT_REGION: eu-west-1
+        run: terraform validate -no-color
 
       - name: Terraform Lint
         id: lint
