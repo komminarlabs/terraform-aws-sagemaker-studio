@@ -4,6 +4,6 @@ output "domain" {
 }
 
 output "user_profile" {
-  description = "The attributes of the users of sagemaker domain"
+  description = "The attributes of the users of the sagemaker domain"
   value       = aws_sagemaker_user_profile.default
 }

@@ -1,5 +1,9 @@
+provider "aws" {
+  region = "eu-central-1"
+}
+
 module "example_studio" {
-  source                  = "github.com/komminarlab/terraform-aws-sagemaker-studio?ref=v1.0.0"
+  source                  = "github.com/komminarlabs/terraform-aws-sagemaker-studio?ref=v1.0.0"
   name                    = "example-studio"
   app_network_access_type = "VpcOnly"
   subnet_ids              = aws_subnet.private[*].id
