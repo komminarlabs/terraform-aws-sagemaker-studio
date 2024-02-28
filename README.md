@@ -92,5 +92,5 @@ No modules.
 | Name | Description |
 |------|-------------|
 | <a name="output_domain"></a> [domain](#output\_domain) | The attributes of the sagemaker domain |
-| <a name="output_user_profile"></a> [user\_profile](#output\_user\_profile) | The attributes of the users of sagemaker domain |
+| <a name="output_user_profile"></a> [user\_profile](#output\_user\_profile) | The attributes of the users of the sagemaker domain |
 <!-- END_TF_DOCS -->
