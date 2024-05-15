@@ -50,7 +50,7 @@ resource "aws_sagemaker_studio_lifecycle_config" "kernel" {
 }
 
 resource "aws_sagemaker_user_profile" "default" {
-  for_each          = { for user in var.user_profiles : user => true }
+  for_each          = var.auth_mode == "IAM" ? { for user in var.user_profiles : user => true } : {}
   domain_id         = aws_sagemaker_domain.default.id
   user_profile_name = each.key
   tags              = var.tags
