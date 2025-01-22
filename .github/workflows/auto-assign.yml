@@ -1,18 +1,23 @@
-name: Auto Assign
+# A bot ensures that these actions get synchronized - do not edit in this repository.
+
+name: PR
+
 on:
   issues:
     types: [opened]
   pull_request:
     types: [opened]
+
 jobs:
-  run:
+  auto-assign:
     runs-on: ubuntu-latest
     permissions:
       issues: write
       pull-requests: write
+
     steps:
     - name: 'Auto-assign issue'
-      uses: pozil/auto-assign-issue@v1
+      uses: pozil/auto-assign-issue@v2
       with:
           repo-token: ${{ secrets.BOT_GITHUB_TOKEN }}
           assignees: thulasirajkomminar
